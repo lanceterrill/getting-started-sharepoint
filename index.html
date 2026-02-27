@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Getting Started with Microsoft SharePoint</title>
+<link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;600;700&family=Georgia:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sp-green: #217346;
+    --sp-light: #2ecc71;
+    --sp-dark: #145a32;
+    --sp-accent: #27ae60;
+    --sp-pale: #eafaf1;
+    --sp-mid: #a9dfbf;
+    --gray: #f4f6f8;
+    --text: #1a1a2e;
+    --muted: #5a6a7a;
+    --white: #ffffff;
+    --card-radius: 16px;
+    --section-gap: 80px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: var(--gray);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* ── SLIDE WRAPPER ── */
+  .slide {
+    max-width: 960px;
+    margin: 40px auto;
+    background: var(--white);
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 8px 48px rgba(33,115,70,0.12);
+  }
+
+  /* ── HEADER STRIP ── */
+  .slide-header {
+    background: linear-gradient(135deg, var(--sp-dark) 0%, var(--sp-green) 60%, var(--sp-accent) 100%);
+    color: var(--white);
+    padding: 14px 36px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+  }
+
+  .slide-header .badge {
+    background: rgba(255,255,255,0.18);
+    border-radius: 20px;
+    padding: 3px 14px;
+    font-size: 12px;
+  }
+
+  /* ── HERO SLIDE ── */
+  .hero {
+    background: linear-gradient(160deg, var(--sp-dark) 0%, var(--sp-green) 55%, #52be80 100%);
+    color: var(--white);
+    padding: 80px 56px 64px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+    top: -200px; right: -150px;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+    bottom: -100px; left: -80px;
+  }
+
+  .hero-icon {
+    font-size: 64px;
+    margin-bottom: 20px;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.25));
+  }
+
+  .hero h1 {
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 10px;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: #a9f0c2;
+  }
+
+  .hero .subtitle {
+    font-size: 17px;
+    opacity: .85;
+    margin-bottom: 36px;
+    font-weight: 300;
+  }
+
+  .hero-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  .pill {
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 30px;
+    padding: 8px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* ── NAV ── */
+  .slide-nav {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    padding: 20px;
+    background: var(--sp-pale);
+    flex-wrap: wrap;
+  }
+
+  .nav-btn {
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 2px solid transparent;
+    background: var(--white);
+    color: var(--sp-green);
+    transition: all .2s;
+  }
+
+  .nav-btn:hover, .nav-btn.active {
+    background: var(--sp-green);
+    color: var(--white);
+    border-color: var(--sp-green);
+  }
+
+  /* ── SECTION TITLE ── */
+  .section-title {
+    text-align: center;
+    padding: 48px 36px 8px;
+  }
+
+  .section-title .eyebrow {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--sp-green);
+    margin-bottom: 8px;
+  }
+
+  .section-title h2 {
+    font-size: 32px;
+    font-weight: 700;
+  }
+
+  .section-title h2 em {
+    font-style: italic;
+    color: var(--sp-green);
+  }
+
+  /* ── WHAT IS ── */
+  .what-is {
+    padding: 48px 56px;
+  }
+
+  .what-is-hero {
+    background: linear-gradient(135deg, var(--sp-pale), #d5f5e3);
+    border-radius: var(--card-radius);
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    margin-bottom: 32px;
+  }
+
+  .what-is-icon {
+    font-size: 72px;
+    flex-shrink: 0;
+  }
+
+  .what-is-hero h3 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--sp-dark);
+  }
+
+  .what-is-hero p {
+    color: var(--muted);
+    font-size: 15px;
+  }
+
+  .feature-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  .feature-pill {
+    background: var(--white);
+    border: 2px solid var(--sp-mid);
+    border-radius: 20px;
+    padding: 6px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--sp-dark);
+  }
+
+  /* ── STEPS ── */
+  .steps-section {
+    padding: 0 56px 48px;
+  }
+
+  .steps-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--sp-dark);
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 3px solid var(--sp-pale);
+  }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .step-card {
+    background: var(--gray);
+    border-radius: var(--card-radius);
+    padding: 24px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    transition: transform .2s, box-shadow .2s;
+    border: 2px solid transparent;
+  }
+
+  .step-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(33,115,70,0.12);
+    border-color: var(--sp-mid);
+  }
+
+  .step-num {
+    background: var(--sp-green);
+    color: var(--white);
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .step-emoji {
+    font-size: 28px;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+
+  .step-body h4 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--sp-dark);
+  }
+
+  .step-body p {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .step-tip {
+    background: var(--sp-pale);
+    border-left: 3px solid var(--sp-green);
+    border-radius: 0 8px 8px 0;
+    padding: 6px 10px;
+    font-size: 12px;
+    color: var(--sp-dark);
+    font-weight: 500;
+  }
+
+  .slide-footer {
+    background: var(--sp-pale);
+    padding: 16px 36px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 600;
+    border-top: 2px solid var(--sp-mid);
+  }
+
+  .slide-footer a {
+    color: var(--sp-green);
+    text-decoration: none;
+    font-weight: 700;
+  }
+
+  /* ── FEATURES GRID ── */
+  .features-section {
+    padding: 48px 56px;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+
+  .feature-card {
+    background: var(--sp-pale);
+    border-radius: var(--card-radius);
+    padding: 28px 24px;
+    text-align: center;
+    transition: transform .2s, box-shadow .2s;
+    border: 2px solid transparent;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 28px rgba(33,115,70,0.14);
+    border-color: var(--sp-accent);
+  }
+
+  .feature-card .fc-icon {
+    font-size: 36px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .feature-card h4 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--sp-dark);
+    margin-bottom: 8px;
+  }
+
+  .feature-card p {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  /* TIPS */
+  .tips-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--sp-dark);
+    margin-bottom: 20px;
+    padding-top: 8px;
+    border-top: 3px solid var(--sp-pale);
+    padding-top: 32px;
+  }
+
+  .tips-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .tip-card {
+    background: var(--white);
+    border: 2px solid var(--sp-mid);
+    border-radius: var(--card-radius);
+    padding: 20px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .tip-icon {
+    font-size: 28px;
+    flex-shrink: 0;
+  }
+
+  .tip-card h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--sp-dark);
+    margin-bottom: 4px;
+  }
+
+  .tip-card p {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  /* ── SHORTCUTS ── */
+  .shortcuts-section {
+    padding: 48px 56px;
+  }
+
+  .shortcuts-intro {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  .shortcuts-intro p {
+    color: var(--muted);
+    font-size: 15px;
+  }
+
+  .shortcuts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .shortcut-card {
+    background: var(--sp-pale);
+    border-radius: var(--card-radius);
+    padding: 20px;
+    text-align: center;
+  }
+
+  .shortcut-keys {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+
+  kbd {
+    background: var(--sp-green);
+    color: var(--white);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: monospace;
+    box-shadow: 0 3px 0 var(--sp-dark);
+  }
+
+  .shortcut-card h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--sp-dark);
+    margin-bottom: 4px;
+  }
+
+  .shortcut-card p {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* ── WHATS NEW ── */
+  .new-section {
+    padding: 48px 56px;
+  }
+
+  .new-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .new-card {
+    background: var(--white);
+    border: 2px solid var(--sp-mid);
+    border-radius: var(--card-radius);
+    padding: 22px;
+    display: flex;
+    gap: 14px;
+    position: relative;
+    transition: transform .2s;
+  }
+
+  .new-card:hover { transform: translateY(-3px); }
+
+  .new-badge {
+    position: absolute;
+    top: -10px; left: 16px;
+    background: var(--sp-green);
+    color: var(--white);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .1em;
+    padding: 2px 10px;
+    border-radius: 10px;
+  }
+
+  .new-card-icon { font-size: 28px; flex-shrink: 0; }
+
+  .new-card h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--sp-dark);
+    margin-bottom: 4px;
+  }
+
+  .new-card p {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  /* ── OUTRO ── */
+  .outro {
+    background: linear-gradient(160deg, var(--sp-dark), var(--sp-green));
+    color: var(--white);
+    padding: 72px 56px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .outro::before {
+    content: '';
+    position: absolute;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+    top: -180px; right: -100px;
+  }
+
+  .outro-icon { font-size: 60px; margin-bottom: 20px; }
+
+  .outro h1 {
+    font-size: 40px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    line-height: 1.15;
+  }
+
+  .outro h1 em { color: #a9f0c2; font-style: italic; }
+
+  .outro .outro-sub {
+    font-size: 16px;
+    opacity: .85;
+    margin-bottom: 36px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    background: var(--white);
+    color: var(--sp-dark);
+    border-radius: 30px;
+    padding: 14px 32px;
+    font-size: 16px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: transform .2s, box-shadow .2s;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  }
+
+  .cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  }
+
+  .outro-link {
+    display: block;
+    margin-top: 24px;
+    color: rgba(255,255,255,0.7);
+    font-size: 13px;
+  }
+
+  .outro-link a { color: #a9f0c2; font-weight: 700; text-decoration: none; }
+
+  /* ── SLIDE NUMBER ── */
+  .slide-num {
+    text-align: center;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--sp-green);
+    padding: 8px 0 0;
+    opacity: 0.7;
+  }
+
+  @media (max-width: 700px) {
+    .hero h1 { font-size: 32px; }
+    .steps-grid, .features-grid, .shortcuts-grid, .tips-grid, .new-grid { grid-template-columns: 1fr; }
+    .what-is-hero { flex-direction: column; text-align: center; }
+    .what-is, .steps-section, .features-section, .shortcuts-section, .new-section, .outro { padding: 32px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════ SLIDE 1 — HERO ══════════ -->
+<div class="slide">
+  <div class="slide-header">
+    <span>State of Nebraska · IT Guide</span>
+    <span class="badge">📁 SharePoint</span>
+  </div>
+  <div class="hero">
+    <div class="hero-icon">📁</div>
+    <h1>Getting Started with <em>Microsoft SharePoint</em></h1>
+    <p class="subtitle">Your complete guide to organizing and sharing everything 🚀</p>
+    <div class="hero-pills">
+      <span class="pill">📂 Sites</span>
+      <span class="pill">📄 Pages</span>
+      <span class="pill">🔗 File Sharing</span>
+      <span class="pill">🤝 Collaboration</span>
+      <span class="pill">🔍 Search</span>
+      <span class="pill">🆕 What's New</span>
+    </div>
+  </div>
+  <div class="slide-footer">
+    <span>Nebraska.gov</span>
+    <span>2026</span>
+  </div>
+</div>
+
+<!-- ══════════ SLIDE 2 — WHAT IS / STEPS ══════════ -->
+<div class="slide">
+  <div class="slide-header">
+    <span>State of Nebraska · IT Guide</span>
+    <span class="badge">2 OF 6</span>
+  </div>
+
+  <div class="what-is">
+    <div class="slide-num">🏢</div>
+    <div class="section-title" style="padding:16px 0 24px;">
+      <div class="eyebrow">Overview</div>
+      <h2>What is <em>Microsoft SharePoint?</em></h2>
+    </div>
+    <div class="what-is-hero">
+      <div class="what-is-icon">🏛️</div>
+      <div>
+        <h3>Your organization's digital home base</h3>
+        <p>SharePoint is your central hub for storing, organizing, and sharing documents and information across your team. Build intranet sites, manage files, and collaborate in real time — from anywhere.</p>
+        <div class="feature-pills">
+          <span class="feature-pill">📂 Document Libraries</span>
+          <span class="feature-pill">🌐 Intranet Sites</span>
+          <span class="feature-pill">🤝 Co-Authoring</span>
+          <span class="feature-pill">🔒 Permissions</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="steps-section">
+    <div class="steps-title">5 Steps to Get Started</div>
+    <div class="steps-grid">
+
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-emoji">🌐</div>
+        <div class="step-body">
+          <h4>Access SharePoint</h4>
+          <p>Go to <strong>sharepoint.com</strong> or open it from the Microsoft 365 app launcher (the waffle icon). Sign in with your @nebraska.gov account.</p>
+          <div class="step-tip">💡 Pin it to your browser for quick access</div>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-emoji">🏠</div>
+        <div class="step-body">
+          <h4>Find Your Sites</h4>
+          <p>Your <strong>SharePoint Home</strong> shows sites you follow, recent activity, and recommended content. Look for your department or team site.</p>
+          <div class="step-tip">💡 Click ★ to follow a site and find it faster</div>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-emoji">📂</div>
+        <div class="step-body">
+          <h4>Open a Document Library</h4>
+          <p>Inside your site, click <strong>Documents</strong> in the left nav. Browse folders, upload files, or create new ones directly in the browser.</p>
+          <div class="step-tip">💡 Drag & drop files to upload instantly</div>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-emoji">✏️</div>
+        <div class="step-body">
+          <h4>Edit & Co-Author</h4>
+          <p>Click any Word, Excel, or PowerPoint file to open it in <strong>your browser</strong>. Multiple people can edit at the same time — no more emailing versions!</p>
+          <div class="step-tip">💡 Changes save automatically — no Ctrl+S needed</div>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">5</div>
+        <div class="step-emoji">🔗</div>
+        <div class="step-body">
+          <h4>Share a File or Folder</h4>
+          <p>Right-click any file and choose <strong>Share</strong>. Send a link by name or email, and choose whether they can edit or only view.</p>
+          <div class="step-tip">💡 Set an expiry date on shared links for security</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="slide-footer">
+    <span>Nebraska.gov · Microsoft SharePoint Guide</span>
+    <a href="https://support.microsoft.com/sharepoint" target="_blank">support.microsoft.com/sharepoint</a>
+  </div>
+</div>
+
+<!-- ══════════ SLIDE 3 — KEY FEATURES + TIPS ══════════ -->
+<div class="slide">
+  <div class="slide-header">
+    <span>State of Nebraska · IT Guide</span>
+    <span class="badge">3 OF 6</span>
+  </div>
+
+  <div class="features-section">
+    <div class="section-title">
+      <div class="eyebrow">Features</div>
+      <h2>Key Features to Know</h2>
+    </div>
+    <br>
+    <div class="features-grid">
+      <div class="feature-card">
+        <span class="fc-icon">🌐</span>
+        <h4>Team Sites</h4>
+        <p>Dedicated spaces for each team or project with shared documents, news, and calendars.</p>
+      </div>
+      <div class="feature-card">
+        <span class="fc-icon">📰</span>
+        <h4>News & Pages</h4>
+        <p>Publish announcements, how-to guides, and rich content pages to keep your team informed.</p>
+      </div>
+      <div class="feature-card">
+        <span class="fc-icon">📂</span>
+        <h4>Document Libraries</h4>
+        <p>Store files with version history, check-in/check-out, and metadata tagging for easy retrieval.</p>
+      </div>
+      <div class="feature-card">
+        <span class="fc-icon">🔒</span>
+        <h4>Permissions & Sharing</h4>
+        <p>Control exactly who sees what with granular read, edit, and owner-level permissions.</p>
+      </div>
+      <div class="feature-card">
+        <span class="fc-icon">🔍</span>
+        <h4>Powerful Search</h4>
+        <p>Find files, people, and content across all your sites instantly with intelligent search.</p>
+      </div>
+      <div class="feature-card">
+        <span class="fc-icon">📱</span>
+        <h4>Mobile App</h4>
+        <p>Access sites, files, and news on the go with the SharePoint mobile app for iOS and Android.</p>
+      </div>
+    </div>
+
+    <div class="tips-title">Pro Tips for Beginners</div>
+    <div class="tips-grid">
+      <div class="tip-card">
+        <div class="tip-icon">📌</div>
+        <div>
+          <h4>Pin Your Favorite Sites</h4>
+          <p>On SharePoint Home, hover over a site and click the star icon to follow it and keep it at the top of your list.</p>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">🕒</div>
+        <div>
+          <h4>Use Version History</h4>
+          <p>Right-click any file → Version History to see all past saves and restore an earlier version if needed.</p>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">🔔</div>
+        <div>
+          <h4>Set Alerts on Files</h4>
+          <p>Right-click a file or folder and choose <em>Alert Me</em> to get an email whenever someone makes changes.</p>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">🗂️</div>
+        <div>
+          <h4>Use Metadata, Not Folders</h4>
+          <p>Tag files with metadata columns (Department, Status, Year) so you can filter without deep folder structures.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-footer">
+    <span>Nebraska.gov · Microsoft SharePoint Guide</span>
+    <a href="https://support.microsoft.com/sharepoint" target="_blank">support.microsoft.com/sharepoint</a>
+  </div>
+</div>
+
+<!-- ══════════ SLIDE 4 — SHORTCUTS ══════════ -->
+<div class="slide">
+  <div class="slide-header">
+    <span>State of Nebraska · IT Guide</span>
+    <span class="badge">4 OF 6</span>
+  </div>
+
+  <div class="shortcuts-section">
+    <div class="section-title">
+      <div class="eyebrow">Quick Reference</div>
+      <h2>⌨️ Handy <em>Shortcuts</em></h2>
+    </div>
+    <div class="shortcuts-intro">
+      <p>Save time every day with these keyboard shortcuts in SharePoint and its Office apps</p>
+    </div>
+    <div class="shortcuts-grid">
+      <div class="shortcut-card">
+        <div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>F</kbd></div>
+        <h4>Search the Page</h4>
+        <p>Quickly find text on any SharePoint page</p>
+      </div>
+      <div class="shortcut-card">
+        <div class="shortcut-keys"><kbd>Alt</kbd><kbd>N</kbd></div>
+        <h4>New File</h4>
+        <p>Create a new document in a library</p>
+      </div>
+      <div class="shortcut-card">
+        <div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Z</kbd></div>
+        <h4>Undo</h4>
+        <p>Undo your last action in Office online</p>
+      </div>
+      <div class="shortcut-card">
+        <div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>S</kbd></div>
+        <h4>Save As</h4>
+        <p>Save a copy to a different location</p>
+      </div>
+      <div class="shortcut-card">
+        <div class="shortcut-keys"><kbd>Alt</kbd><kbd>Q</kbd></div>
+        <h4>Tell Me Box</h4>
+        <p>Jump to "Tell me what you want to do"</p>
+      </div>
+      <div class="shortcut-card">
+        <div class="shortcut-keys"><kbd>F5</kbd></div>
+        <h4>Refresh View</h4>
+        <p>Reload to see the latest file changes</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-footer">
+    <span>Nebraska.gov · Microsoft SharePoint Guide</span>
+    <a href="https://support.microsoft.com/sharepoint" target="_blank">support.microsoft.com/sharepoint</a>
+  </div>
+</div>
+
+<!-- ══════════ SLIDE 5 — WHAT'S NEW ══════════ -->
+<div class="slide">
+  <div class="slide-header">
+    <span>State of Nebraska · IT Guide</span>
+    <span class="badge">5 OF 6</span>
+  </div>
+
+  <div class="new-section">
+    <div class="section-title">
+      <div class="eyebrow">Recent Updates · 2025–2026</div>
+      <h2>What's <em>New in SharePoint</em></h2>
+    </div>
+    <br>
+    <div class="new-grid">
+      <div class="new-card">
+        <span class="new-badge">NEW</span>
+        <div class="new-card-icon">🤖</div>
+        <div>
+          <h4>Copilot in SharePoint</h4>
+          <p>Ask Copilot to summarize documents, draft pages, and find information across your sites using natural language.</p>
+        </div>
+      </div>
+      <div class="new-card">
+        <span class="new-badge">NEW</span>
+        <div class="new-card-icon">📊</div>
+        <div>
+          <h4>Viva Connections Integration</h4>
+          <p>Your SharePoint intranet now surfaces directly inside Microsoft Teams via the Viva Connections dashboard.</p>
+        </div>
+      </div>
+      <div class="new-card">
+        <span class="new-badge">NEW</span>
+        <div class="new-card-icon">🎨</div>
+        <div>
+          <h4>Brand Center</h4>
+          <p>Set org-wide fonts, colors, and logos in one place — every new site automatically inherits your brand.</p>
+        </div>
+      </div>
+      <div class="new-card">
+        <span class="new-badge">NEW</span>
+        <div class="new-card-icon">🔍</div>
+        <div>
+          <h4>Microsoft Search Enhancements</h4>
+          <p>Semantic search now understands intent — find files even when you don't know the exact filename.</p>
+        </div>
+      </div>
+      <div class="new-card">
+        <span class="new-badge">NEW</span>
+        <div class="new-card-icon">🔒</div>
+        <div>
+          <h4>Restricted SharePoint Search</h4>
+          <p>Admins can now limit Copilot and search to pre-approved curated sites, keeping sensitive content private.</p>
+        </div>
+      </div>
+      <div class="new-card">
+        <span class="new-badge">NEW</span>
+        <div class="new-card-icon">📱</div>
+        <div>
+          <h4>Improved Mobile Experience</h4>
+          <p>The SharePoint mobile app now supports offline access and faster document editing on the go.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-footer">
+    <span>Nebraska.gov · Microsoft SharePoint Guide</span>
+    <a href="https://support.microsoft.com/sharepoint" target="_blank">support.microsoft.com/sharepoint</a>
+  </div>
+</div>
+
+<!-- ══════════ SLIDE 6 — OUTRO ══════════ -->
+<div class="slide">
+  <div class="slide-header">
+    <span>State of Nebraska · IT Guide</span>
+    <span class="badge">6 OF 6</span>
+  </div>
+  <div class="outro">
+    <div class="outro-icon">🎉</div>
+    <h1>You're ready to <em>get organized!</em></h1>
+    <p class="outro-sub">Have a question or need a hand getting started? Reach out — we're here to help you make the most of SharePoint.</p>
+    <a class="cta-btn" href="mailto:support@nebraska.gov">📬 I need help! — Contact IT Support</a>
+    <span class="outro-link">More resources at <a href="https://support.microsoft.com/sharepoint" target="_blank">support.microsoft.com/sharepoint</a></span>
+  </div>
+  <div class="slide-footer">
+    <span>Nebraska.gov</span>
+    <span>2026</span>
+  </div>
+</div>
+
+</body>
+</html>
